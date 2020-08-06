@@ -1,12 +1,15 @@
-const grid = document.querySelector(".grid");
-const startButton = document.querySelector("#start");
-const scoreDisplay = document.querySelector("#score");
 let squares = [];
 let snake = [2, 1, 0];
 let apple = 0;
 let direction = 1;
 const width = 10;
 let score = 0;
+let speedInterval = 1000;
+let speed = 0.9;
+
+const grid = document.querySelector(".grid");
+const startButton = document.querySelector("#start");
+const scoreDisplay = document.querySelector("#score");
 
 const createGrid = () => {
   for (let i = 0; i < 100; i++) {
@@ -42,6 +45,9 @@ const move = () => {
     generateApple();
     score++;
     scoreDisplay.textContent = score;
+    clearInterval(gameLoop);
+    speedInterval = speedInterval * speed;
+    gameLoop = setInterval(move, speedInterval);
   }
 
   squares[snake[0]].classList.add("snake");

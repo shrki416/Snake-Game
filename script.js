@@ -1,11 +1,12 @@
 const grid = document.querySelector(".grid");
 const startButton = document.querySelector("#start");
-const score = document.querySelector("#score");
+const scoreDisplay = document.querySelector("#score");
 let squares = [];
 let snake = [2, 1, 0];
 let apple = 0;
 let direction = 1;
 const width = 10;
+let score = 0;
 
 const createGrid = () => {
   for (let i = 0; i < 100; i++) {
@@ -33,6 +34,16 @@ const move = () => {
   const tail = snake.pop();
   squares[tail].classList.remove("snake");
   snake.unshift(snake[0] + direction);
+
+  if (squares[snake[0]].classList.contains("apple")) {
+    squares[snake[0]].classList.remove("apple");
+    squares[tail].classList.add("snake");
+    snake.push(tail);
+    generateApple();
+    score++;
+    scoreDisplay.textContent = score;
+  }
+
   squares[snake[0]].classList.add("snake");
 };
 

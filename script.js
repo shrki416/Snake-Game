@@ -6,6 +6,7 @@ const width = 10;
 let score = 0;
 let speedInterval = 1000;
 let speed = 0.9;
+let gameLoop;
 
 const grid = document.querySelector(".grid");
 const startButton = document.querySelector("#start");
@@ -23,6 +24,20 @@ const createGrid = () => {
 createGrid();
 
 snake.forEach((index) => squares[index].classList.add("snake"));
+
+const startGame = () => {
+  snake.forEach((index) => squares[index].classList.remove("snake"));
+  squares[apple].classList.remove("apple");
+  clearInterval(gameLoop);
+  snake = [2, 1, 0];
+  score = 0;
+  scoreDisplay.textContent = score;
+  direction = 1;
+  speedInterval = 1000;
+  generateApple();
+  snake.forEach((index) => squares[index].classList.add("snake"));
+  gameLoop = setInterval(move, 1000);
+};
 
 const move = () => {
   if (
@@ -53,8 +68,6 @@ const move = () => {
   squares[snake[0]].classList.add("snake");
 };
 
-let gameLoop = setInterval(move, 1000);
-
 const generateApple = () => {
   do {
     apple = Math.floor(Math.random() * squares.length);
@@ -76,3 +89,4 @@ const snakeMovement = (e) => {
 };
 
 document.addEventListener("keyup", snakeMovement);
+startButton.addEventListener("click", startGame);

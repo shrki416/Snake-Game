@@ -25,3 +25,5 @@ const move = () => {
   squares[currentSnake[0]].classList.add("snake");
 };
 move();
+
+let gameLoop = setInterval(move, 1000);
